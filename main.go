@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fmt"
 	e "events/event/entity"
+	"fmt"
 )
 
 func main() {
 
-	localEvent := e.Event{ "EventType", "Source", "Topic", "Extras" }
+	localEvent := e.Event{"EventType", "Source", "Topic", `{"referer":"/golang"}`}
 
-	fmt.Println( localEvent.ToJson() )
+	fmt.Println(localEvent.ToJson())
 }

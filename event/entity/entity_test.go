@@ -1,14 +1,26 @@
 package entity
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestSum(t *testing.T) {
+func TestIsValidEventType(t *testing.T) {
 
-	var s int
+	testExtrasEvent := string(`{"referer":"/golang"}`)
+	testEvent := Event{"EventType", "Source", "Topic", testExtrasEvent}
 
-	s = Sum(1,1)
-	if s != 2 {
-		t.Error("Expected 2, got ", s)
+	if testEvent.IsValidEventType() == true {
+		t.Error("Excpet to be false ", testEvent.EventType)
+	}
+}
+
+func TestIsValidExtras(t *testing.T) {
+
+	testExtrasEvent := string(`{"Referer":golang"}`)
+	testEvent := Event{"EventType", "Source", "Topic", testExtrasEvent}
+
+	if testEvent.IsValidExtras() == true {
+		t.Error("Excpet to be false ", testEvent.Extras)
 	}
 
 }

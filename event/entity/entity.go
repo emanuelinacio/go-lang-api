@@ -1,17 +1,18 @@
 package entity
 
 import (
-	"errors"
-    "fmt"
 	"encoding/json"
+	"errors"
+	"fmt"
+	//"strings"
 )
 
-type Event struct{
+type Event struct {
 	EventType, Source, Topic, Extras string
 }
 
-func (e Event) ToJson() (string, error){
-	
+func (e Event) ToJson() (string, error) {
+
 	JsonObject, err := json.Marshal(e)
 
 	if err != nil {
@@ -22,6 +23,24 @@ func (e Event) ToJson() (string, error){
 	return string(JsonObject), nil
 }
 
-func Sum(x int, y int) int{
-	return x + y
+func (e Event) IsValidEventType() bool {
+
+	switch e.EventType {
+	case "view":
+		return true
+	case "impression":
+		return true
+	case "conversion":
+		return true
+	}
+
+	return false
+}
+
+func (e Event) IsValidExtras() bool {
+
+	var dat map[string]interface{}
+	err := json.Unmarshal([]byte(e.Extras), &dat)
+
+	return err == nil
 }
