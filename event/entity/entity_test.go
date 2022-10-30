@@ -8,12 +8,10 @@ import (
 func TestIsValidEventType(t *testing.T) {
 
 	testExtrasEvent := string(`{"referer":"/golang"}`)
+	eventTest, err := NewEvent("view", "Source", "Topic", testExtrasEvent)
 
-	eventStruct := new(Event)
-	eventTest, err := eventStruct.Init("vieww", "Source", "Topic", testExtrasEvent)
-
-	if err == nil {
-		t.Error("Expect to be false", err)
+	if err != nil {
+		t.Error("Expect to be true", err)
 	}
 
 	fmt.Println(eventTest.ToJson())
@@ -21,13 +19,11 @@ func TestIsValidEventType(t *testing.T) {
 
 func TestIsValidExtras(t *testing.T) {
 
-	testExtrasEvent := string(`{"referer":/golang"}`)
+	testExtrasEvent := string(`{"referer":"/golang"}`)
+	eventTest, err := NewEvent("view", "Source", "Topic", testExtrasEvent)
 
-	eventStruct := new(Event)
-	eventTest, err := eventStruct.Init("view", "Source", "Topic", testExtrasEvent)
-
-	if err == nil {
-		t.Error("Expect to be false", err)
+	if err != nil {
+		t.Error("Expect to be true", err)
 	}
 
 	fmt.Println(eventTest.ToJson())

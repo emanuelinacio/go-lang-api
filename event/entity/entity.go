@@ -13,19 +13,29 @@ type Event struct {
 	Source, Topic string
 }
 
-func (e Event) Init(Type string, Source string, Topic string, Extras string) (Event, error) {
+func NewEvent(Type string, Source string, Topic string, Extras string) (Event, error) {
 
-	objectValueType := new(oV.ObType)
-	validTypeORError, errType := objectValueType.Init(Type)
+	e := new(Event)
+	eventValidated, errValidation := e.ValidInput(Type, Source, Topic, Extras)
+
+	if errValidation != nil {
+		return Event{}, errValidation
+	}
+
+	return eventValidated, nil
+}
+
+func (e Event) ValidInput(Type string, Source string, Topic string, Extras string) (Event, error) {
+
+	validType, errType := oV.NewObType(Type)
 
 	if errType != nil {
 		return e, errType
 	}
 
-	e.EventType = validTypeORError
+	e.EventType = validType
 
-	objectValueExtras := new(oV.ObExtras)
-	validExtrasOrError, errExtras := objectValueExtras.Init(Extras)
+	validExtrasOrError, errExtras := oV.NewObExtras(Extras)
 
 	if errExtras != nil {
 		return e, errExtras

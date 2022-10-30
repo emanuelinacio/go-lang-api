@@ -7,9 +7,7 @@ import (
 
 func main() {
 
-	//localEvent := e.Event{"EventType", "Source", "Topic", `{"referer":"/golang"}`}
-	eventStruct := new(e.Event)
-	localEvent, err := eventStruct.Init("view", "Source", "Topic", `{"referer":/golang"}`)
+	localEvent, err := e.NewEvent("view", "Source", "Topic", `{"referer":"/golang"}`)
 
 	if err == nil {
 		fmt.Println(localEvent.ToJson())

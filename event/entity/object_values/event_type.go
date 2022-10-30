@@ -8,14 +8,15 @@ type ObType struct {
 	Type string
 }
 
-func (o ObType) Init(Type string) (ObType, error) {
+func NewObType(Type string) (ObType, error) {
+	o := new(ObType)
 	o.Type = Type
 
 	if o.IsValidEventType() {
-		return o, nil
+		return ObType{}, nil
 	}
 
-	return o, errors.New("Invalid type")
+	return ObType{Type}, errors.New("Invalid type")
 }
 
 func (o ObType) IsValidEventType() bool {
