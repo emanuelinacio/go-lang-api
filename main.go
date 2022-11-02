@@ -1,17 +1,23 @@
 package main
 
 import (
-	e "events/event/entity"
+	uc "events/event/use-cases"
 	"fmt"
 )
 
 func main() {
+	localEvent, err := uc.CreateEvent("view", "Source", "Topic", `{"referer":"/golang"}`)
 
-	localEvent, err := e.NewEvent("view", "Source", "Topic", `{"referer":"/golang"}`)
-
-	if err == nil {
-		fmt.Println(localEvent.ToJson())
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	fmt.Println(err)
+	saveEvent, errSaveEvent := uc.SaveEventRedis(localEvent)
+
+	if errSaveEvent != nil {
+		fmt.Println(errSaveEvent.Error())
+	}
+
+	fmt.Println(localEvent.ToJson())
+	fmt.Println(saveEvent)
 }

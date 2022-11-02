@@ -13,10 +13,10 @@ func NewObType(Type string) (ObType, error) {
 	o.Type = Type
 
 	if o.IsValidEventType() {
-		return ObType{}, nil
+		return *o, nil
 	}
 
-	return ObType{Type}, errors.New("Invalid type")
+	return ObType{}, errors.New("Invalid type")
 }
 
 func (o ObType) IsValidEventType() bool {

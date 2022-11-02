@@ -19,6 +19,7 @@ func NewEvent(Type string, Source string, Topic string, Extras string) (Event, e
 	eventValidated, errValidation := e.ValidInput(Type, Source, Topic, Extras)
 
 	if errValidation != nil {
+		fmt.Println(errValidation)
 		return Event{}, errValidation
 	}
 
@@ -34,14 +35,15 @@ func (e Event) ValidInput(Type string, Source string, Topic string, Extras strin
 	}
 
 	e.EventType = validType
-
-	validExtrasOrError, errExtras := oV.NewObExtras(Extras)
+	validExtras, errExtras := oV.NewObExtras(Extras)
 
 	if errExtras != nil {
 		return e, errExtras
 	}
 
-	e.Extras = validExtrasOrError
+	e.Extras = validExtras
+	e.Source = Source
+	e.Topic = Topic
 
 	return e, nil
 }

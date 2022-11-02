@@ -14,7 +14,7 @@ func NewObExtras(Extras string) (ObExtras, error) {
 	o.Extras = Extras
 
 	if o.IsValidExtras() {
-		return ObExtras{Extras}, nil
+		return *o, nil
 	}
 
 	return ObExtras{}, errors.New("Invalid json format")
