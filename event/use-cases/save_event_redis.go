@@ -2,7 +2,7 @@ package usecases
 
 import (
 	e "events/event/entity"
-	r "events/event/repository"
+	r "events/event/external"
 )
 
 func SaveEventRedis(event e.Event) (bool, error) {

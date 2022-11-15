@@ -1,25 +1,13 @@
-FROM golang:1.19.2-alpine3.16
+FROM golang:latest
 
-RUN apk update -qq && apk add git
-
-RUN mkdir /app
-
+RUN mkdir -p /app
 WORKDIR /app
-
-#RUN go mod download && go mod verify
-
-#RUN go mod download
-
 ADD . /app
 
-#RUN go mod init github.com/emanuelinacio/go-lang-api
-#RUN go mod tidy
-#RUN go get github.com/go-redis/redis/v8 
+#RUN go test -v ./event/entity
 
-RUN go test -v ./event/entity
-RUN go run main.go 
+RUN go build -o /main
 
-#CMD ["/server"]
-#CMD /bin/bash
-## Our start command which kicks off
-## our newly created binary executable
+EXPOSE 8080
+
+CMD [ "/main" ]
